@@ -1,5 +1,6 @@
 package dev.eliaslabs.shortlinkapi.entities;
 
+import dev.eliaslabs.shortlinkapi.dto.request.LinkRequestDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -33,5 +34,10 @@ public class Link {
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
+
+    public Link(LinkRequestDTO linkDTO) {
+        this.title = linkDTO.title();
+        this.targetURL = linkDTO.targetURL();
+    }
 
 }

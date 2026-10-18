@@ -1,6 +1,7 @@
 package dev.eliaslabs.shortlinkapi.services;
 
 import dev.eliaslabs.shortlinkapi.dto.request.LinkRequestDTO;
+import dev.eliaslabs.shortlinkapi.dto.response.LinkResponseDTO;
 import dev.eliaslabs.shortlinkapi.entities.Link;
 import dev.eliaslabs.shortlinkapi.generators.ShortCodeGenerator;
 import dev.eliaslabs.shortlinkapi.repositories.LinkRepository;
@@ -16,23 +17,24 @@ public class LinkService {
 
     private final LinkRepository linkRepository;
 
-    public List<Link> findAll() {
-        return linkRepository.findAll();
+    public List<LinkResponseDTO> findAll() {
+        return linkRepository.findAll()
+                .stream()
+                .map(LinkResponseDTO::new)
+                .toList();
     }
 
-    public Link save(LinkRequestDTO linkDTO) {
+    public LinkResponseDTO save(LinkRequestDTO linkDTO) {
         String shortCode;
 
         do { // Risk of long (small chance of infinite loop). Do count for retries.
             shortCode = ShortCodeGenerator.generate();
         } while (linkRepository.existsByShortCode(shortCode));
 
-        Link link = new Link();
+        Link link = new Link(linkDTO);
         link.setShortCode(shortCode);
-        link.setTargetURL(linkDTO.getTargetURL());
-        link.setTitle(linkDTO.getTitle());
 
-        return linkRepository.save(link);
+        return new LinkResponseDTO(linkRepository.save(link));
     }
 
     public void deleteById(UUID id) {
