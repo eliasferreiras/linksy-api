@@ -1,4 +1,4 @@
-package dev.eliaslabs.shortlinkapi.generators;
+package dev.eliaslabs.linksy.generators;
 
 import java.security.SecureRandom;
 

@@ -1,10 +1,10 @@
-package dev.eliaslabs.shortlinkapi.services;
+package dev.eliaslabs.linksy.services;
 
-import dev.eliaslabs.shortlinkapi.dto.request.LinkRequestDTO;
-import dev.eliaslabs.shortlinkapi.dto.response.LinkResponseDTO;
-import dev.eliaslabs.shortlinkapi.entities.Link;
-import dev.eliaslabs.shortlinkapi.generators.ShortCodeGenerator;
-import dev.eliaslabs.shortlinkapi.repositories.LinkRepository;
+import dev.eliaslabs.linksy.dto.request.LinkRequestDTO;
+import dev.eliaslabs.linksy.dto.response.LinkResponseDTO;
+import dev.eliaslabs.linksy.entities.Link;
+import dev.eliaslabs.linksy.generators.ShortCodeGenerator;
+import dev.eliaslabs.linksy.repositories.LinkRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

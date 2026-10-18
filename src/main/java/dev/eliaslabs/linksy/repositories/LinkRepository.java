@@ -1,6 +1,6 @@
-package dev.eliaslabs.shortlinkapi.repositories;
+package dev.eliaslabs.linksy.repositories;
 
-import dev.eliaslabs.shortlinkapi.entities.Link;
+import dev.eliaslabs.linksy.entities.Link;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

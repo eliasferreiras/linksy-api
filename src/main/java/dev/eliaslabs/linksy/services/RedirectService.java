@@ -1,7 +1,7 @@
-package dev.eliaslabs.shortlinkapi.services;
+package dev.eliaslabs.linksy.services;
 
-import dev.eliaslabs.shortlinkapi.entities.Link;
-import dev.eliaslabs.shortlinkapi.repositories.LinkRepository;
+import dev.eliaslabs.linksy.entities.Link;
+import dev.eliaslabs.linksy.repositories.LinkRepository;
 import org.springframework.web.server.ResponseStatusException;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;

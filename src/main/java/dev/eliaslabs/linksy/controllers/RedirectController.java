@@ -1,7 +1,7 @@
-package dev.eliaslabs.shortlinkapi.controllers;
+package dev.eliaslabs.linksy.controllers;
 
-import dev.eliaslabs.shortlinkapi.entities.Link;
-import dev.eliaslabs.shortlinkapi.services.RedirectService;
+import dev.eliaslabs.linksy.entities.Link;
+import dev.eliaslabs.linksy.services.RedirectService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,8 +1,8 @@
 spring:
   application:
-    name: shortlink-api
+    name: linksy-api
   datasource:
-    url: jdbc:postgresql://localhost:5432/shortlink
+    url: jdbc:postgresql://localhost:5432/linksy
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
   jpa:

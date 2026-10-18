@@ -1,6 +1,6 @@
-package dev.eliaslabs.shortlinkapi.entities;
+package dev.eliaslabs.linksy.entities;
 
-import dev.eliaslabs.shortlinkapi.dto.request.LinkRequestDTO;
+import dev.eliaslabs.linksy.dto.request.LinkRequestDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

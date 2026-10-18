@@ -1,6 +1,6 @@
-package dev.eliaslabs.shortlinkapi.dto.response;
+package dev.eliaslabs.linksy.dto.response;
 
-import dev.eliaslabs.shortlinkapi.entities.Link;
+import dev.eliaslabs.linksy.entities.Link;
 
 import java.time.LocalDateTime;
 import java.util.UUID;

@@ -1,11 +1,12 @@
-package dev.eliaslabs.shortlinkapi.controllers;
+package dev.eliaslabs.linksy.controllers;
 
-import dev.eliaslabs.shortlinkapi.dto.request.LinkRequestDTO;
-import dev.eliaslabs.shortlinkapi.dto.response.LinkResponseDTO;
-import dev.eliaslabs.shortlinkapi.entities.Link;
-import dev.eliaslabs.shortlinkapi.services.LinkService;
-import lombok.AllArgsConstructor;
+import dev.eliaslabs.linksy.dto.request.LinkRequestDTO;
+import dev.eliaslabs.linksy.dto.response.LinkResponseDTO;
+import dev.eliaslabs.linksy.services.LinkService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,7 +14,8 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/links")
-@AllArgsConstructor
+@RequiredArgsConstructor
+@Validated
 public class LinkController {
 
     private final LinkService linkService;
@@ -25,7 +27,7 @@ public class LinkController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public LinkResponseDTO save(@RequestBody LinkRequestDTO linkRequestDTO) {
+    public LinkResponseDTO save(@Valid @RequestBody LinkRequestDTO linkRequestDTO) {
         return linkService.save(linkRequestDTO);
     }
 
