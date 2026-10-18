@@ -1,3 +1,6 @@
+server:
+  port: 8085
+
 spring:
   application:
     name: linksy-api
@@ -7,7 +10,7 @@ spring:
     password: ${DB_PASSWORD}
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: update
     show-sql: false
     properties:
       hibernate:
