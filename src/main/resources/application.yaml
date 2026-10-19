@@ -2,12 +2,12 @@ spring:
   application:
     name: linksy-api
   datasource:
-    url: jdbc:postgresql://localhost:5432/shortlink
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+    url: jdbc:postgresql://localhost:5432/linksy
+    username: postgres
+    password: 12345678
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
     show-sql: true
     properties:
       hibernate:
