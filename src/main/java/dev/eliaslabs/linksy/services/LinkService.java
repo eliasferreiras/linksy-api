@@ -3,6 +3,8 @@ package dev.eliaslabs.linksy.services;
 import dev.eliaslabs.linksy.dto.request.LinkRequestDTO;
 import dev.eliaslabs.linksy.dto.response.LinkResponseDTO;
 import dev.eliaslabs.linksy.entities.Link;
+import dev.eliaslabs.linksy.entities.User;
+import dev.eliaslabs.linksy.exceptions.NotFoundException;
 import dev.eliaslabs.linksy.generators.ShortCodeGenerator;
 import dev.eliaslabs.linksy.repositories.LinkRepository;
 import lombok.AllArgsConstructor;
@@ -17,14 +19,14 @@ public class LinkService {
 
     private final LinkRepository linkRepository;
 
-    public List<LinkResponseDTO> findAll() {
-        return linkRepository.findAll()
+    public List<LinkResponseDTO> findAllByUserId(UUID userId) {
+        return linkRepository.findAllByUserId(userId)
                 .stream()
                 .map(LinkResponseDTO::new)
                 .toList();
     }
 
-    public LinkResponseDTO save(LinkRequestDTO linkDTO) {
+    public LinkResponseDTO save(LinkRequestDTO linkDTO, User user) {
         String shortCode;
 
         do { // Risk of long (small chance of infinite loop). Do count for retries.
@@ -33,11 +35,15 @@ public class LinkService {
 
         Link link = new Link(linkDTO);
         link.setShortCode(shortCode);
+        link.setUser(user);
 
         return new LinkResponseDTO(linkRepository.save(link));
     }
 
-    public void deleteById(UUID id) {
-        linkRepository.deleteById(id);
+    public void delete(UUID id, UUID userId) {
+        Link link = linkRepository.findByIdAndUserId(id, userId)
+                .orElseThrow(() -> new NotFoundException("Link not found"));
+
+        linkRepository.delete(link);
     }
 }

@@ -77,4 +77,7 @@ public class User implements UserDetails {
         return UserDetails.super.isEnabled();
     }
 
+    public Object get() {
+        return null;
+    }
 }
