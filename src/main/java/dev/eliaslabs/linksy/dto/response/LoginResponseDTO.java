@@ -1,7 +1,8 @@
 package dev.eliaslabs.linksy.dto.response;
 
 public record LoginResponseDTO(
-        String token,
-        String username
+        String name,
+        String username,
+        String token
 ) {
 }

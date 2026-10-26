@@ -40,9 +40,11 @@ public class AuthenticationService {
                     )
             );
 
+            User user = (User) authentication.getPrincipal();
+
             String token = tokenProvider.generateToken(authentication);
 
-            return new LoginResponseDTO(token, loginRequestDTO.email());
+            return new LoginResponseDTO(user.getName(), user.getEmail(), token);
         } catch (BadCredentialsException e) {
             throw new BadRequestException("Invalid Credentials");
         } catch (Exception e) {

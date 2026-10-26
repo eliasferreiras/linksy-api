@@ -2,14 +2,16 @@
 
 CREATE TABLE roles (
     id UUID PRIMARY KEY,
-    name VARCHAR(255) NOT NULL
+    name VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP(6) NOT NULL
 );
 
 CREATE TABLE users (
     id UUID PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE,
-    password VARCHAR(255)
+    password VARCHAR(255),
+    created_at TIMESTAMP(6) NOT NULL
 );
 
 CREATE TABLE users_roles (
@@ -35,7 +37,7 @@ CREATE TABLE links (
 
 -- Populate default values.
 
-INSERT INTO roles (id, name)
+INSERT INTO roles (id, name, created_at)
 VALUES
-    (gen_random_uuid(), 'ROLE_USER'),
-    (gen_random_uuid(), 'ROLE_ADMIN');
+    (gen_random_uuid(), 'ROLE_USER', CURRENT_TIMESTAMP),
+    (gen_random_uuid(), 'ROLE_ADMIN', CURRENT_TIMESTAMP);
