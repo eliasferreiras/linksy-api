@@ -1,5 +1,6 @@
 package dev.eliaslabs.linksy.entities;
 
+import dev.eliaslabs.linksy.dto.request.RegisterRequestDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -47,6 +48,11 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "user")
     private List<Link> links = new ArrayList<>();
+
+    public User(RegisterRequestDTO registerRequestDTO) {
+        this.name = registerRequestDTO.name();
+        this.email = registerRequestDTO.email();
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

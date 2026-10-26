@@ -20,6 +20,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
+import java.util.stream.Collectors;
+
 
 @Service
 @RequiredArgsConstructor
@@ -40,11 +42,16 @@ public class AuthenticationService {
                     )
             );
 
-            User user = (User) authentication.getPrincipal();
-
             String token = tokenProvider.generateToken(authentication);
 
-            return new LoginResponseDTO(user.getName(), user.getEmail(), token);
+            User user = (User) authentication.getPrincipal();
+
+            Set<String> roles = user.getRoles()
+                    .stream()
+                    .map(Role::getAuthority)
+                    .collect(Collectors.toSet());
+
+            return new LoginResponseDTO(user.getName(), user.getEmail(), roles, token);
         } catch (BadCredentialsException e) {
             throw new BadRequestException("Invalid Credentials");
         } catch (Exception e) {
@@ -57,14 +64,12 @@ public class AuthenticationService {
             throw new BadRequestException("Email already in use");
         }
 
-        Role role = roleRepository.findByName(RoleEnum.ROLE_USER.name());
+        Set<Role> roles = Set.of(roleRepository.findByName(RoleEnum.ROLE_USER.name()));
         String encodedPasswd = passwordEncoder.encode(registerRequestDTO.password());
 
-        User user = new User();
-        user.setName(registerRequestDTO.name());
-        user.setEmail(registerRequestDTO.email());
+        User user = new User(registerRequestDTO);
         user.setPassword(encodedPasswd);
-        user.setRoles(Set.of(role));
+        user.setRoles(roles);
 
         return new RegisterResponseDTO(userRepository.save(user));
     }
