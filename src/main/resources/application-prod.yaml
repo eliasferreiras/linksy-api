@@ -16,6 +16,6 @@ spring:
 app:
   cors:
     allowed-origins: https://linksy.eliaslabs.dev
-    
+
 jwt:
   secret: ${SECRET_KEY}
