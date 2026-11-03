@@ -39,7 +39,7 @@ jobs:
         run: |
           rsync -avz \
             -e "ssh -i ~/.ssh/id_ed25519 -p $SSH_PORT" \
-            linksy-api.jar \
+            artifact/linksy-api.jar \
             "$SSH_USER@$SSH_HOST:/tmp/linksy-api.jar"
 
       # 7. Instalar o JAR e reiniciar a API
