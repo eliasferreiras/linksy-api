@@ -8,13 +8,13 @@ permissions:
   contents: write
 
 jobs:
-#  build:
-#    name: Build Site
-#    uses: ./.github/workflows/build.yml
-#    secrets: inherit
+  build:
+    name: Build JAR
+    uses: ./.github/workflows/build.yml
+    secrets: inherit
 
   deploy:
     name: Publish Site
-#    needs: build
+    needs: build
     uses: ./.github/workflows/publish.yml
     secrets: inherit
