@@ -1,0 +1,45 @@
+name: Build JAR
+
+on:
+  workflow_call:
+
+jobs:
+  release:
+    name: Build and Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Baixar o código do repositório
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      # 2. Configurar o Java
+      - name: Setup Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '25'
+          cache: maven
+
+      # 3. Compilar e executar os testes
+      - name: Build
+        run: |
+          if [ -f ./mvnw ]; then
+            chmod +x ./mvnw
+            ./mvnw -B clean verify
+          else
+            mvn -B clean verify
+          fi
+
+      # 4. Preparar o JAR
+      - name: Prepare JAR
+        run: |
+          JAR_FILE=$(find target -maxdepth 1 -type f \
+            -name '*.jar' ! -name '*.jar.original' | head -n 1)
+
+          if [ -z "$JAR_FILE" ]; then
+            echo "JAR não encontrado!"
+            exit 1
+          fi
+
+          cp "$JAR_FILE" linksy-api.jar
