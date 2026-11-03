@@ -64,7 +64,10 @@ public class AuthenticationService {
             throw new BadRequestException("Email already in use");
         }
 
-        Set<Role> roles = Set.of(roleRepository.findByName(RoleEnum.ROLE_USER.name()));
+        Role userRole = roleRepository.findByName(RoleEnum.ROLE_USER.name())
+                .orElseThrow(() -> new IllegalStateException("ROLE_USER is missing from the database"));
+        Set<Role> roles = Set.of(userRole);
+
         String encodedPasswd = passwordEncoder.encode(registerRequestDTO.password());
 
         User user = new User(registerRequestDTO);
