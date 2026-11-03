@@ -9,40 +9,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Baixar o código do repositório
-      - name: Checkout
-        uses: actions/checkout@v5
-
-      # 2. Configurar o Java
-      - name: Setup Java
-        uses: actions/setup-java@v5
+      - name: Download Artifact
+        uses: actions/download-artifact@v4
         with:
-          distribution: temurin
-          java-version: '25'
-          cache: maven
-
-      # 3. Compilar e executar os testes
-      - name: Build
-        run: |
-          if [ -f ./mvnw ]; then
-            chmod +x ./mvnw
-            ./mvnw -B clean package -DskipTests
-          else
-            mvn -B clean package -DskipTests
-          fi
-
-      # 4. Preparar o JAR
-      - name: Prepare JAR
-        run: |
-          JAR_FILE=$(find target -maxdepth 1 -type f \
-            -name '*.jar' ! -name '*.jar.original' | head -n 1)
-
-          if [ -z "$JAR_FILE" ]; then
-            echo "JAR não encontrado!"
-            exit 1
-          fi
-
-          cp "$JAR_FILE" linksy-api.jar
+          name: linksy-api
+          path: artifact/
 
       # 5. Configurar SSH
       - name: Setup SSH
@@ -66,8 +37,8 @@ jobs:
           SSH_PORT: ${{ secrets.SERVER_SSH_PORT}}
           SSH_USER: ${{ secrets.SERVER_USER}}
         run: |
-          scp -i ~/.ssh/id_ed25519 \
-            -P "$SSH_PORT" \
+          rsync -avz \
+            -e "ssh -i ~/.ssh/id_ed25519 -p $SSH_PORT" \
             linksy-api.jar \
             "$SSH_USER@$SSH_HOST:/tmp/linksy-api.jar"
 

@@ -23,23 +23,11 @@ jobs:
 
       # 3. Compilar e executar os testes
       - name: Build
-        run: |
-          if [ -f ./mvnw ]; then
-            chmod +x ./mvnw
-            ./mvnw -B clean package -DskipTests
-          else
-            mvn -B clean package -DskipTests
-          fi
+        run: ./mvnw -B clean package -DskipTests
 
-      # 4. Preparar o JAR
-      - name: Prepare JAR
-        run: |
-          JAR_FILE=$(find target -maxdepth 1 -type f \
-            -name '*.jar' ! -name '*.jar.original' | head -n 1)
-
-          if [ -z "$JAR_FILE" ]; then
-            echo "JAR não encontrado!"
-            exit 1
-          fi
-
-          cp "$JAR_FILE" linksy-api.jar
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: linksy-api
+          path: target/*.jar
+          if-no-files-found: error
