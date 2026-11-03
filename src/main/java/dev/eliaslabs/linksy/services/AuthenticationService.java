@@ -13,7 +13,6 @@ import dev.eliaslabs.linksy.repositories.RoleRepository;
 import dev.eliaslabs.linksy.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -33,30 +32,24 @@ public class AuthenticationService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
 
-    public LoginResponseDTO login(LoginRequestDTO loginRequestDTO) throws Exception {
-        try {
-            Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(
-                            loginRequestDTO.email(),
-                            loginRequestDTO.password()
-                    )
-            );
+    public LoginResponseDTO login(LoginRequestDTO loginRequestDTO) {
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        loginRequestDTO.email(),
+                        loginRequestDTO.password()
+                )
+        );
 
-            String token = tokenProvider.generateToken(authentication);
+        String token = tokenProvider.generateToken(authentication);
 
-            User user = (User) authentication.getPrincipal();
+        User user = (User) authentication.getPrincipal();
 
-            Set<String> roles = user.getRoles()
-                    .stream()
-                    .map(Role::getAuthority)
-                    .collect(Collectors.toSet());
+        Set<String> roles = user.getRoles()
+                .stream()
+                .map(Role::getAuthority)
+                .collect(Collectors.toSet());
 
-            return new LoginResponseDTO(user.getName(), user.getEmail(), roles, token);
-        } catch (BadCredentialsException e) {
-            throw new BadRequestException("Invalid Credentials");
-        } catch (Exception e) {
-            throw new Exception("Unexpected error: " + e.getMessage());
-        }
+        return new LoginResponseDTO(user.getName(), user.getEmail(), roles, token);
     }
 
     public RegisterResponseDTO register(RegisterRequestDTO registerRequestDTO) throws BadRequestException {
