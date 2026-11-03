@@ -12,6 +12,14 @@ spring:
     properties:
       hibernate:
         format_sql: true
+
 app:
   cors:
     allowed-origins: http://localhost:5173
+  admin:
+    name: ${ADMIN_NAME:Administrator}
+    email: ${ADMIN_EMAIL:admin@linksy.dev}
+    password: ${ADMIN_PASSWORD:12345678}
+
+jwt:
+  secret: "my-secret-key"

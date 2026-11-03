@@ -1,6 +1,7 @@
 package dev.eliaslabs.linksy.services;
 
 import dev.eliaslabs.linksy.entities.Link;
+import dev.eliaslabs.linksy.exceptions.NotFoundException;
 import dev.eliaslabs.linksy.repositories.LinkRepository;
 import org.springframework.web.server.ResponseStatusException;
 import lombok.AllArgsConstructor;
@@ -14,8 +15,6 @@ public class RedirectService {
 
     public Link redirect(String shortCode) {
         return linkRepository.findByShortCode(shortCode)
-                .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND, "Link not found")
-                );
+                .orElseThrow(() -> new NotFoundException("Link not found"));
     }
 }

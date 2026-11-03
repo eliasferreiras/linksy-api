@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name = "link")
+@Table(name = "links")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -35,9 +35,13 @@ public class Link {
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
-    public Link(LinkRequestDTO linkDTO) {
-        this.title = linkDTO.title();
-        this.targetURL = linkDTO.targetURL();
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    public Link(LinkRequestDTO dto) {
+        this.title = dto.title();
+        this.targetURL = dto.targetURL();
     }
 
 }

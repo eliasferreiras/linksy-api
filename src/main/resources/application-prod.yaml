@@ -12,6 +12,14 @@ spring:
     hibernate:
       ddl-auto: validate
     show-sql: false
+
 app:
   cors:
     allowed-origins: https://linksy.eliaslabs.dev
+  admin:
+    name: ${ADMIN_NAME}
+    email: ${ADMIN_EMAIL}
+    password: ${ADMIN_PASSWORD}
+
+jwt:
+  secret: ${SECRET_KEY}
