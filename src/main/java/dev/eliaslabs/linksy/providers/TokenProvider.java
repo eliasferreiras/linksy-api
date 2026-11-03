@@ -44,14 +44,14 @@ public class TokenProvider {
                     .build()
                     .verify(token)
                     .getSubject();
-        } catch (JWTVerificationException exception){
+        } catch (JWTVerificationException exception) {
             return "";
         }
     }
 
     private Instant genExpirationDate() {
         return LocalDateTime.now()
-                .plusMinutes(30)
+                .plusMinutes(1)
                 .toInstant(ZoneOffset.of("-03:00"));
     }
 }
