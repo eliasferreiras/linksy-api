@@ -17,9 +17,9 @@ app:
   cors:
     allowed-origins: https://linksy.eliaslabs.dev
   admin:
-    name: ${ADMIN_NAME:Administrator}
-    email: ${ADMIN_EMAIL:}
-    password: ${ADMIN_PASSWORD:}
+    name: ${ADMIN_NAME}
+    email: ${ADMIN_EMAIL}
+    password: ${ADMIN_PASSWORD}
 
 jwt:
   secret: ${SECRET_KEY}
