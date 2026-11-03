@@ -5,7 +5,7 @@ on:
 
 jobs:
   release:
-    name: Build and Deploy
+    name: Publish to Production
     runs-on: ubuntu-latest
 
     steps:
@@ -52,6 +52,9 @@ jobs:
           ssh -i ~/.ssh/id_ed25519 \
             -p "$SSH_PORT" \
             "$SSH_USER@$SSH_HOST" \
-            'sudo /usr/bin/install -m 0644 /tmp/linksy-api.jar /opt/linksy/linksy-api.jar &&
+            'if [ -f /opt/linksy/linksy-api.jar ]; then
+               sudo cp /opt/linksy/linksy-api.jar /opt/linksy/linksy-api.jar.backup
+             fi &&
+             sudo /usr/bin/install -m 0644 /tmp/linksy-api.jar /opt/linksy/linksy-api.jar &&
              sudo /usr/bin/systemctl restart linksy &&
              sudo /usr/bin/systemctl is-active linksy'
