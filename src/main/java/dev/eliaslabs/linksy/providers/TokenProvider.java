@@ -50,6 +50,6 @@ public class TokenProvider {
     }
 
     private Instant genExpirationDate() {
-        return Instant.now().plusSeconds(60);
+        return Instant.now().plusSeconds(1800);
     }
 }
